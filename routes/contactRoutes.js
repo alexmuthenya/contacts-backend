@@ -7,8 +7,10 @@ import {
     getContacts, 
     updateContact 
 } from '../controllers/contactController.js'
+import { validateToken } from '../middleware/validateTokenHandler.js'
 export const router = express.Router()
 
+router.use(validateToken)
 
 router.get('/',expressAsyncHandler(getContacts))
 router.get('/:id', expressAsyncHandler(getContact))
