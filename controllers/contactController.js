@@ -3,6 +3,10 @@ import Contact from "../models/contactModel.js";
 
 export async function getContacts(req, res) {
   const contacts = await Contact.find({user_id:req.user.id});
+  if(contacts.user_id.toString() !== req.user.id){
+    res.status(403)
+    throw new Error("User not authorised for this operation")
+  }
   return res.status(200).json(contacts);
 }
 
@@ -20,6 +24,7 @@ export async function createContact(req, res) {
 
 export async function getContact(req, res) {
   const { id } = req.params;
+  
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid contact ID" });
@@ -27,6 +32,10 @@ export async function getContact(req, res) {
   const contact = await Contact.findById(id);
   if (!contact) {
     return res.status(404).json({ error: "Contact not found" });
+  }
+  if(contact.user_id.toString() !== req.user.id){
+    res.status(403)
+    throw new Error("User not authorised for this operation")
   }
   return res.status(200).json(contact);
 }
