@@ -1,4 +1,4 @@
-import { aj } from "../config/arcjet.js";
+import  aj  from "../config/arcjet.js";
 
 async function arcjetMiddleware(req, res, next) {
 

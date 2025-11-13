@@ -5,7 +5,6 @@ import { errorHandler } from './middleware/errorHandler.js'
 import { connectDB } from './config/dbConnection.js'
 import { userRouter } from './routes/userRoutes.js'
 import arcjetMiddleware from './middleware/arcjetMiddleware.js'
-import { isKeyWorking } from './config/arcjet.js'
 dotenv.config()
 
 const app = express()
@@ -13,7 +12,6 @@ const PORT = process.env.PORT || 5000
 connectDB()
 app.use(express.json())
 app.use(arcjetMiddleware)
-isKeyWorking()
 
 app.use('/api/contacts', router)
 app.use('/api/users', userRouter)
